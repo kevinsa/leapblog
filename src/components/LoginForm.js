@@ -21,6 +21,7 @@ export class LoginForm extends React.Component {
     this.setState( {password: event.target.value });
   }
 
+
   handleSubmit(event) {
     this.props.loginCallback(this.state);
     event.preventDefault();
@@ -33,7 +34,8 @@ export class LoginForm extends React.Component {
           <label htmlFor="email">email</label>
           <input type="email" 
                  className="form-control" 
-                 id="email" 
+                 id="email"
+                 name="email"
                  placeholder="example@example.com" 
                  value={this.state.email}
                  onChange={this.handleEmailChange} />
@@ -43,11 +45,12 @@ export class LoginForm extends React.Component {
           <input type="password" 
                  className="form-control" 
                  id="password" 
+                 name="password"
                  placeholder="password" 
                  value={this.state.password}
                  onChange={this.handlePasswordChange} />
         </div>
-        <button type="submit" className="btn btn-default">Login</button>
+        <button disabled={this.state.username.length === 0 || this.state.password.length === 0} type="submit" className="btn btn-default">Login</button>
       </form>
     );
   }

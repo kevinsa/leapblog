@@ -29,7 +29,7 @@ class RegisterPage extends React.Component {
       });
       
   }
-
+  
   render() {
     if(!this.state.isRegistered) {
       return(

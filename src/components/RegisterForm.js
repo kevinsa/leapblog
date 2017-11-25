@@ -62,7 +62,7 @@ export class RegisterForm extends React.Component {
                  value={this.state.password}
                  onChange={this.handlePasswordChange} />
         </div>
-        <button type="submit" className="btn btn-default">Register</button>
+        <button disabled={this.state.name.length === 0 || this.state.email.length === 0 || this.state.password.length ===0} type="submit" className="btn btn-default">Register</button>
       </form>
     );
   }
