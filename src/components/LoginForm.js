@@ -5,20 +5,32 @@ export class LoginForm extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      emailValid: false,
+      passwordValid: false,
+      formValid: false,
+      emailPrisitine: true,
+      passwordPristine: true,
     }
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.validateField = this.validateField.bind(this);
   }
 
   handleEmailChange(event) {
-    this.setState({ username: event.target.value} );
+    const name = event.target.name;
+    const value = event.target.value
+    this.setState({ username: value, emailPrisitine: false},
+      () => this.validateField(name, value) );
   }
 
   handlePasswordChange(event) {
-    this.setState( {password: event.target.value });
+    const name = event.target.name;
+    const value = event.target.value
+    this.setState( {password: value, passwordPristine: false },
+      () => this.validateField(name, value) );
   }
 
 
@@ -27,10 +39,38 @@ export class LoginForm extends React.Component {
     event.preventDefault();
   }
 
+  validateField(name, value) {
+    let emailValid = this.state.emailValid;
+    let passwordValid = this.state.passwordValid;
+
+    switch(name) {
+      case 'email':
+        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) || false;
+        break;
+      case 'password':
+        passwordValid = value.length >= 6;
+        break;
+      default:
+        break;
+    }
+    this.setState({
+      emailValid: emailValid,
+      passwordValid: passwordValid
+    }, this.validateForm);
+  }
+
+  validateForm() {
+    this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+  }
+
+  errorClass(isValid, isPristine) {
+    return !isValid && !isPristine? 'has-error' : '';
+  }
+
   render() {
     return(
       <form onSubmit={this.handleSubmit}>
-        <div className="form-group">
+        <div className={`form-group ${this.errorClass(this.state.emailValid, this.state.emailPrisitine )}`}>
           <label htmlFor="email">email</label>
           <input type="email" 
                  className="form-control" 
@@ -40,7 +80,7 @@ export class LoginForm extends React.Component {
                  value={this.state.email}
                  onChange={this.handleEmailChange} />
         </div>
-        <div className="form-group">
+        <div className={`form-group ${this.errorClass(this.state.passwordValid, this.state.passwordPristine )}`}>
           <label htmlFor="password">password</label>
           <input type="password" 
                  className="form-control" 
@@ -50,7 +90,7 @@ export class LoginForm extends React.Component {
                  value={this.state.password}
                  onChange={this.handlePasswordChange} />
         </div>
-        <button disabled={this.state.username.length === 0 || this.state.password.length === 0} type="submit" className="btn btn-default">Login</button>
+        <button disabled={!this.state.formValid} type="submit" className="btn btn-default">Login</button>
       </form>
     );
   }
