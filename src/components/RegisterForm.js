@@ -6,25 +6,42 @@ export class RegisterForm extends React.Component {
     this.state = {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      nameValid: false,
+      emailValid: false,
+      passwordValid: false,
+      namePristine: true,
+      emailPrisitine: true,
+      passwordPristine: true,
+      formValid: false,
     }
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.validateField = this.validateField.bind(this);
   }
 
   handleNameChange(event) {
-    this.setState({ name: event.target.value} );
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({ name: value, namePristine: false},
+      () => this.validateField(name, value) );
   }
 
   handleEmailChange(event) {
-    this.setState({ email: event.target.value} );
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({ email: value, emailPrisitine: false},
+      () => this.validateField(name, value) );
   }
 
   handlePasswordChange(event) {
-    this.setState( {password: event.target.value });
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({ password: value, passwordPristine: false},
+      () => this.validateField(name, value) );
   }
 
   handleSubmit(event) {
@@ -32,32 +49,70 @@ export class RegisterForm extends React.Component {
     event.preventDefault();
   }
 
+  validateField(name, value) {
+    let emailValid = this.state.emailValid;
+    let passwordValid = this.state.passwordValid;
+    let nameValid = this.state.nameValid;
+
+    switch(name) {
+      case 'email':
+        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) || false;
+        break;
+      case 'password':
+        passwordValid = value.length >= 6;
+        break;
+      case 'name':
+        nameValid = value.length >= 3 && value.length <= 100;
+        break
+      default:
+        break;
+    }
+    this.setState({
+      emailValid: emailValid,
+      passwordValid: passwordValid,
+      nameValid: nameValid
+    }, this.validateForm);
+  }
+
+  errorClass(isValid, isPristine) {
+    return !isValid && !isPristine? 'has-error' : '';
+  }
+
+  validateForm() {
+    this.setState({
+      formValid: this.state.emailValid && this.state.passwordValid && this.state.nameValid
+    });
+  }
+
   render() {
     return(
       <form onSubmit={this.handleSubmit}>
-        <div className="form-group">
+        <div className={`form-group ${this.errorClass(this.state.nameValid, this.state.namePristine )}`}>
           <label htmlFor="name">name</label>
           <input type="text" 
                  className="form-control"
-                 id="name" 
+                 id="name"
+                 name="name"
                  placeholder="name" 
                  value={this.state.name}
                  onChange={this.handleNameChange} />
         </div>
-        <div className="form-group">
+        <div className={`form-group ${this.errorClass(this.state.emailValid, this.state.emailPrisitine )}`}>
           <label htmlFor="email">email</label>
           <input type="email" 
                  className="form-control" 
                  id="email" 
+                 name="email"
                  placeholder="example@example.com" 
                  value={this.state.email}
                  onChange={this.handleEmailChange} />
         </div>
-        <div className="form-group">
+        <div className={`form-group ${this.errorClass(this.state.passwordValid, this.state.passwordPristine )}`}>
           <label htmlFor="password">password</label>
           <input type="password" 
                  className="form-control" 
                  id="password" 
+                 name="password"
                  placeholder="password" 
                  value={this.state.password}
                  onChange={this.handlePasswordChange} />
