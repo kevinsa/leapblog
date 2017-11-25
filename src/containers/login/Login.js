@@ -1,8 +1,9 @@
 import React from "react";
+import { withRouter } from 'react-router-dom';
 import { LoginForm } from '../../components/LoginForm';
 const { loginUser } = require('../../api/Auth');
 
-export class LoginPage extends React.Component {
+class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +18,7 @@ export class LoginPage extends React.Component {
     loginUser(loginData)
     .then((res) => {
       this.props.authenticatedStateCallback(res.data);
-      
+      this.props.history.push('/');
     })
     .catch((err) => {
       this.setState({ hasAuthErrors: true, error: err });
@@ -34,3 +35,5 @@ export class LoginPage extends React.Component {
     );
   }
 }
+
+export default withRouter(LoginPage)

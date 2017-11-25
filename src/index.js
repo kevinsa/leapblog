@@ -5,10 +5,11 @@ import registerServiceWorker from './registerServiceWorker';
 
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import { HomePage } from './containers/home/Home';
-import { LoginPage } from './containers/login/Login';
-import { RegisterPage } from './containers/register/Register';
+import LoginPage from './containers/login/Login';
+import RegisterPage from './containers/register/Register';
 import { BlogPostPage } from './containers/blogpost/Blogpost';
 import { TopNav } from './components/TopNav';
+const { getAuthUser, setAuthUser, clearAuthUser } = require('./api/Storage');
 
 class App extends React.Component {
   constructor(props) {
@@ -22,6 +23,16 @@ class App extends React.Component {
     this.setLoggedOutState = this.setLoggedOutState.bind(this);
   }
 
+  componentWillMount() {
+    var authUser = getAuthUser();
+    if(authUser) {
+      this.setState({
+        authenticatedUser: authUser,
+        isAuthenitcated: true
+      })
+    }
+  }
+
   setLoggedInState(loginResponse) {
     
     this.setState({ 
@@ -31,7 +42,8 @@ class App extends React.Component {
       },
       isAuthenitcated: true
     });
-    
+
+    setAuthUser(this.state.authenticatedUser);
   }
 
   setLoggedOutState() {
@@ -39,6 +51,8 @@ class App extends React.Component {
       authenticatedUser: null,
       isAuthenitcated: false
     });
+
+    clearAuthUser(this.state.authenticatedUser);
   }
 
   render() {
