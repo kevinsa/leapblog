@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
 import { RegisterForm } from '../../components/RegisterForm';
+import { Alert } from '../../components/Alert';
 const { registerUser } = require('../../api/Auth');
 
 class RegisterPage extends React.Component {
@@ -8,7 +9,8 @@ class RegisterPage extends React.Component {
     super(props);
     this.state = {
       isRegistered: false,
-      hasError: false
+      hasError: false,
+      error: ''
     }
     this.handleRegister = this.handleRegister.bind(this);
     this.redirectToLogin = this.redirectToLogin.bind(this);
@@ -25,16 +27,24 @@ class RegisterPage extends React.Component {
         this.setState({ isRegistered: true, hasError: false });
       })
       .catch((err) => {
-        this.setState({ isRegistered: false, hasError: true });
+        if(err.response) {
+          const message = `${err.response.status} ${err.response.statusText}`;
+          this.setState({ isRegistered: false, hasError: true, error: message });
+        }
+        else {
+          const message = err.message
+          this.setState({ isRegistered: false, hasError: true, error: message });
+        }
       });
       
   }
-  
+
   render() {
     if(!this.state.isRegistered) {
       return(
         <div className="row">
-          <div className="col-12-xs">
+          <div className="col-md-12">
+          { this.state.hasError ? <Alert message={this.state.error} alertStyle={"alert alert-danger"}/> : ''}
             <RegisterForm registrationCallback={this.handleRegister}/>
           </div>
         </div>
@@ -43,7 +53,7 @@ class RegisterPage extends React.Component {
     else {
       return(
         <div className="row">
-          <div className="col-12-xs">
+          <div className="col-md-12">
             <h3>Registration Completed</h3>
             <button className="btn btn-default" onClick={this.redirectToLogin}>Login</button>
           </div>

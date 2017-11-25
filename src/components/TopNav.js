@@ -17,6 +17,7 @@ export class TopNav extends React.Component {
     if(this.props.loggedInUser) {
       return(
         <nav className="navbar navbar-inverse navbar-fixed-top">
+          <HashRouter>
         <div className="container">
           <div className="navbar-header">
             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -25,23 +26,24 @@ export class TopNav extends React.Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="#">leapblog</a>
+            <Link className="navbar-brand" to="/">leapblog</Link>
           </div>
-          <HashRouter>
+          
           <div id="navbar" className="collapse navbar-collapse">
-            <ul className="nav navbar-nav">
-              <li className="active"><Link to="/">home</Link></li>
-              <li className=""><a onClick={this.handleLogout}>logout</a></li>
+            <ul className="nav navbar-nav navbar-right">
+              <li><a>Welcome, {this.props.loggedInUser.uid}</a></li>
+              <li><a onClick={this.handleLogout}>logout</a></li>
             </ul>
           </div>
-          </HashRouter>
         </div>
+        </HashRouter>
       </nav>
       );
     }
     else {
       return (
         <nav className="navbar navbar-inverse navbar-fixed-top">
+          <HashRouter>
         <div className="container">
           <div className="navbar-header">
             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -50,18 +52,17 @@ export class TopNav extends React.Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="#">leapblog</a>
+            <Link className="navbar-brand" to="/">leapblog</Link>
           </div>
-          <HashRouter>
+          
           <div id="navbar" className="collapse navbar-collapse">
-            <ul className="nav navbar-nav">
-              <li className="active"><Link to="/">home</Link></li>
+            <ul className="nav navbar-nav navbar-right">
               <li><Link to="/login">login</Link></li>
               <li><Link to="/register">sign up</Link></li>
             </ul>
           </div>
-          </HashRouter>
         </div>
+        </HashRouter>
       </nav>
       );
     }
