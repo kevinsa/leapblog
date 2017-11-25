@@ -11,22 +11,53 @@ import { BlogPostPage } from './containers/blogpost/Blogpost';
 import { TopNav } from './components/TopNav';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      authenticatedUser: null,
+      isAuthenitcated: false
+    }
+
+    this.setLoggedInState = this.setLoggedInState.bind(this);
+    this.setLoggedOutState = this.setLoggedOutState.bind(this);
+  }
+
+  setLoggedInState(loginResponse) {
+    
+    this.setState({ 
+      authenticatedUser: {
+        uid: loginResponse.uid,
+        token: loginResponse.token
+      },
+      isAuthenitcated: true
+    });
+    
+  }
+
+  setLoggedOutState() {
+    this.setState({ 
+      authenticatedUser: null,
+      isAuthenitcated: false
+    });
+  }
+
   render() {
     return(
 
       <div>
-        <TopNav />
+        <TopNav loggedInUser={this.state.authenticatedUser} authenticatedStateCallback={this.setLoggedOutState}/>
       
         <div className="main-content">
-
-        <HashRouter hashType="slash">
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/register" component={RegisterPage} />
-            <Route exact path="/blogpost/:id" component={BlogPostPage} />
-          </Switch>
-        </HashRouter>
+          <div className="container">
+            <HashRouter>
+              <Switch>
+                <Route exact path="/" component={HomePage} />
+                <Route exact path="/login" render={() => ( <LoginPage authenticatedStateCallback={this.setLoggedInState}/> )} />
+                <Route exact path="/register" component={RegisterPage} />
+                <Route exact path="/blogpost/:id" component={BlogPostPage} />
+              </Switch>
+            </HashRouter>
+          </div>
       </div>
     </div>
 
