@@ -3,3 +3,8 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.main-content {
+  padding: 40px 15px;
+  text-align: center;
+}
