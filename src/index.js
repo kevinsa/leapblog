@@ -6,6 +6,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import { HomePage } from './containers/home/Home';
 import LoginPage from './containers/login/Login';
 import RegisterPage from './containers/register/Register';
+import BlogPostAddPage from './containers/blogpost/Blogpost-add';
 import { BlogPostPage } from './containers/blogpost/Blogpost';
 import { TopNav } from './components/TopNav';
 
@@ -43,6 +44,7 @@ class App extends React.Component {
     this.setState({ 
       authenticatedUser: {
         uid: loginResponse.uid,
+        name: loginResponse.name, 
         token: loginResponse.token
       },
       isAuthenitcated: true
@@ -70,9 +72,10 @@ class App extends React.Component {
           <div className="container">
             <HashRouter>
               <Switch>
-                <Route exact path="/" component={HomePage} />
+                <Route exact path="/" render={() => ( <HomePage loggedInUser={this.state.authenticatedUser}/> )}/>
                 <Route exact path="/login" render={() => ( <LoginPage authenticatedStateCallback={this.setLoggedInState}/> )} />
                 <Route exact path="/register" component={RegisterPage} />
+                <Route exact path="/blogpost/add" component={BlogPostAddPage} />
                 <Route exact path="/blogpost/:id" component={BlogPostPage} />
               </Switch>
             </HashRouter>

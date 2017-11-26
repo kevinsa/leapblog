@@ -35,7 +35,10 @@ export class LoginForm extends React.Component {
 
 
   handleSubmit(event) {
-    this.props.loginCallback(this.state);
+    this.props.loginCallback({
+      username: this.state.username,
+      password: this.state.password
+    });
     event.preventDefault();
   }
 
@@ -68,7 +71,7 @@ export class LoginForm extends React.Component {
   }
 
   render() {
-    let loadingContent = <span><i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i></span>;
+    let loadingContent = <span><i className="fa fa-spinner fa-pulse fa-2x fa-fw"></i></span>;
 
     return(
       <form onSubmit={this.handleSubmit}>

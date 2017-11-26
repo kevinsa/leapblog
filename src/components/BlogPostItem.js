@@ -37,21 +37,77 @@ const BlogPostSummary = styled.div`
   line-height: 1.5em;
 `;
 
+const BlogActions = styled.span`
+  float: right;
+  margin-left: 1em;
+`;
+
+export default class BlogPostItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.deleteBlogPost = this.deleteBlogPost.bind(this);
+  }
+
+  deleteBlogPost() {
+    this.props.deleteCallback(this.props.blogPost.key);
+  }
+
+  render() {
+    let actionsContent = <BlogActions>
+    <button class="btn btn-xs btn-default"><i className="fa fa-pencil" aria-hidden="true"></i></button>
+    <button class="btn btn-xs btn-default" onClick={this.deleteBlogPost}><i className="fa fa-trash" aria-hidden="true"></i></button>
+  </BlogActions>
+
+    return (
+      <HashRouter>
+      <BlogPostSection>
+        <BlogPostHeader>
+          { (this.props.loggedInUser && this.props.loggedInUser.uid === this.props.blogPost.user.uid) ? actionsContent : '' }
+       
+          <BlogPostTitle>
+            <Link to={`/blogpost/${this.props.blogPost.id}`}>{this.props.blogPost.title}</Link>
+          </BlogPostTitle>
+          <BlogPostMeta>
+            Posted on {new Date(this.props.blogPost.date).toString()} | by {this.props.blogPost.user.displayName}
+          </BlogPostMeta>
+        </BlogPostHeader>
+        <BlogPostSummary>
+          <p>
+            {this.props.blogPost.content}
+          </p>
+        </BlogPostSummary>
+      </BlogPostSection>
+      </HashRouter>
+    );
+  }
+}
+
+BlogPostItem.propTypes = {
+  blogPost: PropTypes.object
+};
+
+
+/*
 const BlogPostItem = (props) => {
   return (
     <HashRouter>
     <BlogPostSection>
       <BlogPostHeader>
+        <BlogActions>
+          <button class="btn btn-xs btn-default"><i className="fa fa-pencil" aria-hidden="true"></i></button>
+          <button class="btn btn-xs btn-default" onClick={props.deleteCallback(props.blogPost.id)}><i className="fa fa-trash" aria-hidden="true"></i></button>
+        </BlogActions>
         <BlogPostTitle>
           <Link to={`/blogpost/${props.blogPost.id}`}>{props.blogPost.title}</Link>
         </BlogPostTitle>
         <BlogPostMeta>
-          Posted on <a href="#">July 19, 2013</a> | By <a href="#">Paul Laros</a>
+          Posted on {new Date(props.blogPost.date).toString()} | by {props.blogPost.user.displayName}
         </BlogPostMeta>
       </BlogPostHeader>
       <BlogPostSummary>
         <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          {props.blogPost.content}
         </p>
       </BlogPostSummary>
     </BlogPostSection>
@@ -64,3 +120,4 @@ BlogPostItem.propTypes = {
 };
 
 export default BlogPostItem;
+*/

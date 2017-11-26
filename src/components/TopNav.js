@@ -31,7 +31,7 @@ export class TopNav extends React.Component {
           
           <div id="navbar" className="collapse navbar-collapse">
             <ul className="nav navbar-nav navbar-right">
-              <li><a>Welcome, {this.props.loggedInUser.uid}</a></li>
+              <li><a>Welcome, {this.props.loggedInUser.name}</a></li>
               <li><a onClick={this.handleLogout}>logout</a></li>
             </ul>
           </div>
