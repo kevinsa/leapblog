@@ -42,6 +42,12 @@ const BlogActions = styled.span`
   margin-left: 1em;
 `;
 
+const DeleteActionLink = styled.a`
+  cursor: pointer;
+  margin-left: 10px;
+  color: #a94442;
+`;
+
 export default class BlogPostItem extends React.Component {
   constructor(props) {
     super(props);
@@ -55,9 +61,9 @@ export default class BlogPostItem extends React.Component {
 
   render() {
     let actionsContent = <BlogActions>
-    <button class="btn btn-xs btn-default"><i className="fa fa-pencil" aria-hidden="true"></i></button>
-    <button class="btn btn-xs btn-default" onClick={this.deleteBlogPost}><i className="fa fa-trash" aria-hidden="true"></i></button>
-  </BlogActions>
+    <Link to={`/blogpost/${this.props.blogPost.key}/edit`}><i className="fa fa-pencil" aria-hidden="true"></i> edit</Link>
+    <DeleteActionLink onClick={this.deleteBlogPost}><i className="fa fa-trash" aria-hidden="true"></i> delete</DeleteActionLink>
+   </BlogActions>
 
     return (
       <HashRouter>
@@ -86,38 +92,3 @@ export default class BlogPostItem extends React.Component {
 BlogPostItem.propTypes = {
   blogPost: PropTypes.object
 };
-
-
-/*
-const BlogPostItem = (props) => {
-  return (
-    <HashRouter>
-    <BlogPostSection>
-      <BlogPostHeader>
-        <BlogActions>
-          <button class="btn btn-xs btn-default"><i className="fa fa-pencil" aria-hidden="true"></i></button>
-          <button class="btn btn-xs btn-default" onClick={props.deleteCallback(props.blogPost.id)}><i className="fa fa-trash" aria-hidden="true"></i></button>
-        </BlogActions>
-        <BlogPostTitle>
-          <Link to={`/blogpost/${props.blogPost.id}`}>{props.blogPost.title}</Link>
-        </BlogPostTitle>
-        <BlogPostMeta>
-          Posted on {new Date(props.blogPost.date).toString()} | by {props.blogPost.user.displayName}
-        </BlogPostMeta>
-      </BlogPostHeader>
-      <BlogPostSummary>
-        <p>
-          {props.blogPost.content}
-        </p>
-      </BlogPostSummary>
-    </BlogPostSection>
-    </HashRouter>
-  );
-}
-
-BlogPostItem.propTypes = {
-  blogPost: PropTypes.object
-};
-
-export default BlogPostItem;
-*/

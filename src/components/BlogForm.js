@@ -1,4 +1,5 @@
 import React from 'react';
+const { getBlogPostById } = require('../api/BlogPost');
 
 export class BlogForm extends React.Component {
   constructor(props) {
@@ -12,12 +13,41 @@ export class BlogForm extends React.Component {
       formValid: false,
       titlePrisitine: true,
       contentPristine: true,
+      isLoading: false,
+      blogPost: {}
     }
 
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleContentChange = this.handleContentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validateField = this.validateField.bind(this);
+  }
+
+  setEditInitialState(response) {
+    this.setState({ 
+      isLoading: false, 
+      blogPost: response.data.blogposts,
+      title: response.data.blogposts.title,
+      content: response.data.blogposts.content,
+      titleValid: true,
+      contentValid: true,
+      formValid: true,
+      titlePrisitine: false,
+      contentPristine: false,
+     });
+  }
+
+  componentDidMount() {
+      this.setState({ isLoading: true })
+      
+      getBlogPostById(this.props.blogPostId)
+        .then((res) => {
+          this.setEditInitialState(res);
+        })
+        .catch((err) => {
+          this.setState({ isLoading: false, blogPost: {}, title: '', content: '' })
+  
+        });
   }
 
   handleTitleChange(event) {
@@ -35,11 +65,24 @@ export class BlogForm extends React.Component {
   }
 
   handleSubmit(event) {
-    this.props.blogSubmitCallback({
-      title: this.state.title,
-      content: this.state.content
-    });
     event.preventDefault();
+
+    if(this.props.blogPostId !== null) {
+      //update existing blog post
+      this.props.blogEditCallback({
+        title: this.state.title,
+        content: this.state.content
+      });
+    }
+    else {
+      //create a new blog post
+      this.props.blogSubmitCallback({
+        title: this.state.title,
+        content: this.state.content
+      });
+    }
+    
+    
   }
 
   validateField(name, value) {

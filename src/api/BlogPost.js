@@ -13,8 +13,16 @@ const getBlogPosts = () => {
   return axios.get(`${baseUrl}/api/blogposts`);
 }
 
+const getBlogPostById = (key) => {
+  return axios.get(`${baseUrl}/api/blogposts/${key}`);
+}
+
 const createBlogPost = (blogPostData) => {
   return axios.post(`${baseUrl}/api/blogposts`, blogPostData, _getAuthHeader() );
+}
+
+const updateBlogPost = (blogPostData, key) => {
+  return axios.put(`${baseUrl}/api/blogposts/${key}`, blogPostData, _getAuthHeader() );
 }
 
 const deleteBlogPost = (key) => {
@@ -23,6 +31,8 @@ const deleteBlogPost = (key) => {
 
 module.exports = {
   getBlogPosts,
+  getBlogPostById,
   createBlogPost,
+  updateBlogPost,
   deleteBlogPost
 }

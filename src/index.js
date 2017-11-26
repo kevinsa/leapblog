@@ -7,6 +7,7 @@ import { HomePage } from './containers/home/Home';
 import LoginPage from './containers/login/Login';
 import RegisterPage from './containers/register/Register';
 import BlogPostAddPage from './containers/blogpost/Blogpost-add';
+import BlogPostEditPage from './containers/blogpost/Blogpost-edit';
 import { BlogPostPage } from './containers/blogpost/Blogpost';
 import { TopNav } from './components/TopNav';
 
@@ -77,6 +78,7 @@ class App extends React.Component {
                 <Route exact path="/register" component={RegisterPage} />
                 <Route exact path="/blogpost/add" component={BlogPostAddPage} />
                 <Route exact path="/blogpost/:id" component={BlogPostPage} />
+                <Route exact path="/blogpost/:id/edit" component={BlogPostEditPage} />
               </Switch>
             </HashRouter>
           </div>
