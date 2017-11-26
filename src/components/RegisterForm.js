@@ -13,7 +13,7 @@ export class RegisterForm extends React.Component {
       namePristine: true,
       emailPrisitine: true,
       passwordPristine: true,
-      formValid: false,
+      formValid: false
     }
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -85,6 +85,8 @@ export class RegisterForm extends React.Component {
   }
 
   render() {
+    let loadingContent = <span><i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i></span>;
+    
     return(
       <form onSubmit={this.handleSubmit}>
         <div className={`form-group ${this.errorClass(this.state.nameValid, this.state.namePristine )}`}>
@@ -118,6 +120,8 @@ export class RegisterForm extends React.Component {
                  onChange={this.handlePasswordChange} />
         </div>
         <button disabled={this.state.name.length === 0 || this.state.email.length === 0 || this.state.password.length ===0} type="submit" className="btn btn-default">Register</button>
+      
+        { this.props.isSubmitting ? loadingContent : ''}
       </form>
     );
   }

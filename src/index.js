@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 import { HashRouter, Route, Switch } from 'react-router-dom';
@@ -9,6 +8,12 @@ import LoginPage from './containers/login/Login';
 import RegisterPage from './containers/register/Register';
 import { BlogPostPage } from './containers/blogpost/Blogpost';
 import { TopNav } from './components/TopNav';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap-theme.min.css';
+import 'font-awesome/css/font-awesome.min.css';
+import './index.css';
+
 const { getAuthUser, setAuthUser, clearAuthUser } = require('./api/Storage');
 
 class App extends React.Component {

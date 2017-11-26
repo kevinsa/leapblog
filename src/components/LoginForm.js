@@ -68,6 +68,8 @@ export class LoginForm extends React.Component {
   }
 
   render() {
+    let loadingContent = <span><i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i></span>;
+
     return(
       <form onSubmit={this.handleSubmit}>
         <div className={`form-group ${this.errorClass(this.state.emailValid, this.state.emailPrisitine )}`}>
@@ -91,6 +93,8 @@ export class LoginForm extends React.Component {
                  onChange={this.handlePasswordChange} />
         </div>
         <button disabled={!this.state.formValid} type="submit" className="btn btn-default">Login</button>
+        
+        { this.props.isSubmitting ? loadingContent : ''}
       </form>
     );
   }
