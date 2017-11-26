@@ -1,7 +1,6 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
 import { RegisterForm } from '../../components/RegisterForm';
-//import { Alert } from '../../components/Alert';
 import Alert from '../../components/Alert';
 const { registerUser } = require('../../api/Auth');
 
