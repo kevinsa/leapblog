@@ -1,9 +1,16 @@
-import { appConfig } from '../utils/config';
-
 const axios = require('axios');
+const { getAuthUser } = require('./Storage');
+const baseUrl = 'http://localhost:8090';
+
+const _getAuthHeader = () => {
+  let token = getAuthUser().token || '';
+  let headerValue = `Bearer ${token}`;
+
+  return { headers: { Authorization: headerValue } };
+}
 
 const getBlogComments = (blogKey) => {
-  return axios.get(`${appConfig.apiBaseUrl}/api/blogposts/${blogKey}/comments`);
+  return axios.get(`${baseUrl}/api/blogposts/${blogKey}/comments`);
 }
 
 module.exports = {

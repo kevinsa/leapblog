@@ -77,7 +77,7 @@ class App extends React.Component {
                 <Route exact path="/login" render={() => ( <LoginPage authenticatedStateCallback={this.setLoggedInState}/> )} />
                 <Route exact path="/register" component={RegisterPage} />
                 <Route exact path="/blogpost/add" component={BlogPostAddPage} />
-                <Route exact path="/blogpost/:id" component={BlogPostPage} />
+                <Route exact path="/blogpost/:id" render={(props) => ( <BlogPostPage loggedInUser={this.state.authenticatedUser} {...props}/> )} />
                 <Route exact path="/blogpost/:id/edit" component={BlogPostEditPage} />
               </Switch>
             </HashRouter>

@@ -72,7 +72,7 @@ export default class BlogPostItem extends React.Component {
           { (this.props.loggedInUser && this.props.loggedInUser.uid === this.props.blogPost.user.uid) ? actionsContent : '' }
        
           <BlogPostTitle>
-            <Link to={`/blogpost/${this.props.blogPost.id}`}>{this.props.blogPost.title}</Link>
+            <Link to={`/blogpost/${this.props.blogPost.key}`}>{this.props.blogPost.title}</Link>
           </BlogPostTitle>
           <BlogPostMeta>
             Posted on {new Date(this.props.blogPost.date).toString()} | by {this.props.blogPost.user.displayName}
