@@ -27,6 +27,10 @@ const DateSmall = styled.small`
   margin-left: 10px;
 `;
 
+const DeleteLink = styled.a`
+  cursor: pointer;
+`;
+
 export class BlogPostCommentItem extends React.Component {
   constructor(props) {
     super(props);
@@ -41,7 +45,7 @@ export class BlogPostCommentItem extends React.Component {
 
   render() {
     let actionsContent = <span className="pull-right">
-      <a onClick={this.deleteCommentItem}>delete</a>
+      <DeleteLink onClick={this.deleteCommentItem}><i className="fa fa-trash" aria-hidden="true"></i> delete</DeleteLink>
       </span>
 
     return(
