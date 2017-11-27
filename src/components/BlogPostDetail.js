@@ -1,11 +1,8 @@
 import React from 'react';
 import BlogPostItem from './BlogPostItem';
 
-export class BlogPostDetail extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
+export class BlogPostDetail extends React.Component {
   render() {
     return (
       <div>
