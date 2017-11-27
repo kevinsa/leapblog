@@ -2,8 +2,9 @@ import React from "react";
 import styled from 'styled-components';
 import { BlogPostDetail } from '../../components/BlogPostDetail';
 import { BlogPostCommentItem } from '../../components/BlogPostCommentItem';
+import { BlogPostCommentForm } from '../../components/BlogPostCommentForm';
 const { getBlogPostById } = require('../../api/BlogPost');
-const { getBlogComments, deleteBlogComment } = require('../../api/BlogComment');
+const { getBlogComments, deleteBlogComment, createBlogComment } = require('../../api/BlogComment');
 
 const LoadingDiv = styled.div`
   text-align: center;
@@ -18,6 +19,7 @@ export class BlogPostPage extends React.Component {
       isLoading: false
     }
 
+    this.handleCommentAdd = this.handleCommentAdd.bind(this);
     this.handleCommentDelete = this.handleCommentDelete.bind(this);
   }
 
@@ -54,8 +56,22 @@ export class BlogPostPage extends React.Component {
       })
       .catch((err) => {
         this.setState({ isLoading: false })
-        //todo: do something here
-        console.log(err);
+        
+      });
+  }
+
+  handleCommentAdd(commentText) {
+    this.setState({ isLoading: true });
+
+    createBlogComment(this.state.blogPost.key, commentText)
+      .then((res) => {
+        var commentState = this.state.blogComments;
+        commentState.push(res.data.comment);
+        this.setState({ isLoading: false, blogComments: commentState })
+      })
+      .catch((err) => {
+        this.setState({ isLoading: false });
+
       });
   }
 
@@ -80,6 +96,9 @@ export class BlogPostPage extends React.Component {
               {this.state.blogComments.map((comment) => {
                 return <BlogPostCommentItem blogComment={comment} deleteCommentCallback={this.handleCommentDelete} loggedInUser={this.props.loggedInUser}  />
               })}
+            </div>
+            <div>
+              <BlogPostCommentForm addCommentCallback={this.handleCommentAdd} loggedInUser={this.props.loggedInUser} />
             </div>
           </div>
         </div>

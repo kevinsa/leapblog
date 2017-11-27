@@ -29,6 +29,8 @@ const DateSmall = styled.small`
 
 const DeleteLink = styled.a`
   cursor: pointer;
+  margin-left: 10px;
+  color: #a94442;
 `;
 
 export class BlogPostCommentItem extends React.Component {

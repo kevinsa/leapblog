@@ -13,11 +13,19 @@ const getBlogComments = (blogKey) => {
   return axios.get(`${baseUrl}/api/blogposts/${blogKey}/comments`);
 }
 
+const createBlogComment = (blogKey, commentText) => {
+  return axios.post(`${baseUrl}/api/blogposts/${blogKey}/comments`,
+    { content: commentText },
+    _getAuthHeader()
+  );
+}
+
 const deleteBlogComment = (blogKey, commentKey) => {
   return axios.delete(`${baseUrl}/api/blogposts/${blogKey}/comments/${commentKey}`, _getAuthHeader() );
 }
 
 module.exports = {
   getBlogComments,
+  createBlogComment,
   deleteBlogComment
 }
