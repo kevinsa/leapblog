@@ -1,6 +1,7 @@
 import React from 'react';
 import BlogPostItem from './BlogPostItem';
 import styled from 'styled-components';
+import Alert from './Alert';
 const { getBlogPosts, deleteBlogPost } = require('../api/BlogPost');
 
 const CenteredDiv = styled.div`
@@ -14,6 +15,8 @@ export default class BlogPostList extends React.Component {
     this.state = {
       blogposts: [],
       isLoading: false,
+      hasLoadingError: false,
+      loadingErrorMsg: '',
     };
 
     this.loadBlogPosts = this.loadBlogPosts.bind(this);
@@ -32,7 +35,14 @@ export default class BlogPostList extends React.Component {
       this.setState({ isLoading: false, blogposts: res.data.blogposts });
     })
     .catch((err) => {
-      this.setState({ isLoading: false });
+      if(err.response) {
+        const message = `${err.response.status} ${err.response.statusText}`;
+        this.setState({ isLoading: false, hasLoadingError: true, loadingErrorMsg: message });
+      }
+      else {
+        const message = err.message;
+        this.setState({ isLoading: false, hasLoadingError: true, loadingErrorMsg: message });
+      }
     });
   }
 
@@ -55,6 +65,8 @@ export default class BlogPostList extends React.Component {
 
     return(
       <div>
+        { this.state.hasLoadingError ? <Alert message={this.state.loadingErrorMsg} alertStyle={"alert alert-danger"}/> : ''}
+
         { this.state.isLoading ? loadingContent : ''}
 
         {this.state.blogposts.map((post) => {

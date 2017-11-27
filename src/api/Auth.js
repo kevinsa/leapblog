@@ -1,12 +1,12 @@
 const axios = require('axios');
-const baseUrl = 'http://localhost:8090';
+const { getConfig } = require('../config/AppConfig');
 
 const registerUser = (userData) => {
-  return axios.post(`${baseUrl}/api/register`, userData);
+  return axios.post(`${getConfig().apiBaseUrl}/register`, userData);
 }
 
 const loginUser = (credentials) => {
-  return axios.post(`${baseUrl}/api/login`, credentials)
+  return axios.post(`${getConfig().apiBaseUrl}/login`, credentials)
 }
 
 module.exports = {

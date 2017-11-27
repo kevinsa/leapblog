@@ -38,16 +38,18 @@ export class BlogForm extends React.Component {
   }
 
   componentDidMount() {
-      this.setState({ isLoading: true })
-      
-      getBlogPostById(this.props.blogPostId)
-        .then((res) => {
-          this.setEditInitialState(res);
-        })
-        .catch((err) => {
-          this.setState({ isLoading: false, blogPost: {}, title: '', content: '' })
-  
-        });
+      if(this.props.blogPostId) {
+        this.setState({ isLoading: true })
+        
+        getBlogPostById(this.props.blogPostId)
+          .then((res) => {
+            this.setEditInitialState(res);
+          })
+          .catch((err) => {
+            this.setState({ isLoading: false, blogPost: {}, title: '', content: '' })
+    
+          });
+      }
   }
 
   handleTitleChange(event) {
@@ -67,7 +69,7 @@ export class BlogForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    if(this.props.blogPostId !== null) {
+    if(this.props.blogPostId) {
       //update existing blog post
       this.props.blogEditCallback({
         title: this.state.title,

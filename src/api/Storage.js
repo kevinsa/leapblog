@@ -23,8 +23,17 @@ const clearAuthUser = () => {
   localStorage.removeItem(_authUserKey);
 }
 
+const getAuthHeader = () => {
+  let user = getAuthUser();
+  if(user && user.token) {
+    return { headers: { Authorization: `Bearer ${user.token}` } }
+  }
+  return {};
+}
+
 module.exports = {
   setAuthUser,
   getAuthUser,
-  clearAuthUser
+  clearAuthUser,
+  getAuthHeader
 }

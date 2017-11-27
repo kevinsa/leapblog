@@ -26,6 +26,7 @@ export class BlogPostCommentForm extends React.Component {
     event.preventDefault();
     if(this.state.comment.length > 0) {
       this.props.addCommentCallback(this.state.comment);
+      this.setState({ comment: '' });
     }
   }
 
