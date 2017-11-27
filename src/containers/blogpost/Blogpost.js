@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { BlogPostDetail } from '../../components/BlogPostDetail';
 import { BlogPostCommentItem } from '../../components/BlogPostCommentItem';
 import { BlogPostCommentForm } from '../../components/BlogPostCommentForm';
+import { base } from '../../config/Database';
 const { getBlogPostById } = require('../../api/BlogPost');
 const { getBlogComments, deleteBlogComment, createBlogComment, updateBlogComment } = require('../../api/BlogComment');
 
@@ -16,31 +17,35 @@ export class BlogPostPage extends React.Component {
     this.state = {
       blogPost: null,
       blogComments: [],
+      liveComments: [],
       isLoading: false
     }
-
+    
     this.handleCommentAdd = this.handleCommentAdd.bind(this);
     this.handleCommentDelete = this.handleCommentDelete.bind(this);
     this.handleCommentEdit = this.handleCommentEdit.bind(this);
   }
 
   componentDidMount() {
-    Promise.all([
-      getBlogPostById(this.props.match.params.id),
-      getBlogComments(this.props.match.params.id)
-    ])
-    .then((responses => {
-      let blogPost = responses[0].data.blogposts;
-      blogPost.key = this.props.match.params.id
-
-      this.setState({
-        blogPost: blogPost,
-        blogComments: responses[1].data.comments
-      });
-    }))
-    .catch((err) => {
-      console.log(err);
+    base.bindToState(`comments/${this.props.match.params.id}`, {
+      context: this,
+      state: 'blogComments',
+      asArray: true,
+      then() {
+        console.log('something happened');
+      }
     });
+
+    getBlogPostById(this.props.match.params.id)
+      .then((res) => {
+        let blogPost = res.data.blogposts;
+        blogPost.key = this.props.match.params.id
+
+        this.setState({ blogPost: blogPost });
+      })
+      .catch((err) => {
+
+      });
   }
 
   handleCommentDelete(comment) {
@@ -49,11 +54,8 @@ export class BlogPostPage extends React.Component {
     this.setState({ isLoading: true });
     deleteBlogComment(this.state.blogPost.key, key)
       .then((res) => {
-        var commentsState = this.state.blogComments.filter((c) => {
-          return (c.key !== key);
-        })
-
-        this.setState({ blogComments: commentsState, isLoading: false })
+        
+        this.setState({ isLoading: false })
       })
       .catch((err) => {
         this.setState({ isLoading: false })
@@ -66,13 +68,12 @@ export class BlogPostPage extends React.Component {
 
     createBlogComment(this.state.blogPost.key, commentText)
       .then((res) => {
-        var commentState = this.state.blogComments;
-        commentState.push(res.data.comment);
-        this.setState({ isLoading: false, blogComments: commentState })
+
+        this.setState({ isLoading: false })
       })
       .catch((err) => {
-        this.setState({ isLoading: false });
 
+        this.setState({ isLoading: false });
       });
   }
 
@@ -81,19 +82,13 @@ export class BlogPostPage extends React.Component {
 
     updateBlogComment(this.state.blogPost.key, comment.key, updatedText)
       .then((res) => {
-        var commentState = this.state.blogComments;
-        commentState.forEach((c) => {
-          if(c.key === comment.key) {
-            c.content = updatedText;
-          }
-        });
-        this.setState({ blogComments: commentState, isLoading: false});
+
+        this.setState({ isLoading: false});
       })
       .catch((err) => {
+
         this.setState({ isLoading: false });
-      })
-    console.dir(comment);
-    console.log(updatedText);
+      });
   }
 
   render() {
