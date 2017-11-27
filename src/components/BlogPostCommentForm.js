@@ -43,7 +43,7 @@ export class BlogPostCommentForm extends React.Component {
                 className="form-control" 
                 id="comment"
                 name="comment"
-                placeholder="have an interesting comment?" 
+                placeholder={`Hey ${this.props.loggedInUser.name}, have an interesting comment?`} 
                 value={this.state.comment}
                 onChange={this.handleCommentChange} />
         </form>

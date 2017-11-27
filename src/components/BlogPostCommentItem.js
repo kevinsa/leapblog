@@ -27,6 +27,11 @@ const DateSmall = styled.small`
   margin-left: 10px;
 `;
 
+const ActionLink = styled.a`
+  cursor: pointer;
+  margin-left: 10px;
+`;
+
 const DeleteLink = styled.a`
   cursor: pointer;
   margin-left: 10px;
@@ -36,8 +41,16 @@ const DeleteLink = styled.a`
 export class BlogPostCommentItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isEditing: false,
+      updatedComment: ''
+    }
 
     this.deleteCommentItem = this.deleteCommentItem.bind(this);
+    this.editCommentItem = this.editCommentItem.bind(this);
+    this.onCancelEdit = this.onCancelEdit.bind(this);
+    this.onCommentEditSubmit = this.onCommentEditSubmit.bind(this)
+    this.handleCommentChange = this.handleCommentChange.bind(this);
   }
 
   deleteCommentItem() {
@@ -45,29 +58,93 @@ export class BlogPostCommentItem extends React.Component {
     this.props.deleteCommentCallback(this.props.blogComment);
   }
 
+  editCommentItem(event) {
+    this.setState({ isEditing: true });
+  }
+
+  onCancelEdit() {
+    this.setState({ isEditing: false });
+  }
+
+  handleCommentChange(event) {
+    const name = event.target.name;
+    const value = event.target.value
+    this.setState( {updatedComment: value });
+  }
+
+  onCommentEditSubmit(event) {
+    event.preventDefault();
+    if(this.state.updatedComment.length > 0) {
+      this.props.editCommentCallback(this.props.blogComment, this.state.updatedComment);
+      this.setState({ isEditing: false });
+    }
+  }
+
   render() {
     let actionsContent = <span className="pull-right">
-      <DeleteLink onClick={this.deleteCommentItem}><i className="fa fa-trash" aria-hidden="true"></i> delete</DeleteLink>
+      <ActionLink onClick={this.editCommentItem}>
+      <i className="fa fa-pencil" aria-hidden="true"></i> edit</ActionLink>
+      <DeleteLink onClick={this.deleteCommentItem}>
+        <i className="fa fa-trash" aria-hidden="true"></i> delete</DeleteLink>
       </span>
 
-    return(
-      <CommentList>
-        <div>
-        <CommentItem>
-          <span className="pull-left">
-            <CircleImage src="http://lorempixel.com/40/40" />
-          </span>
+    let editCancelContent = <span className="pull-right"><ActionLink onClick={this.onCancelEdit}>
+    <i className="fa fa-window-close" aria-hidden="true"></i> cancel</ActionLink></span>
+
+    if(!this.state.isEditing) {
+      return(
+        <CommentList>
           <div>
-          { (this.props.loggedInUser && this.props.loggedInUser.uid === this.props.blogComment.user.uid) ? actionsContent : '' }
-            
-            <strong>{this.props.blogComment.user.displayName}</strong>
-            <small>  on {new Date(this.props.blogComment.date).toString()} </small>
-            <br />
-            <small className="text-muted">{this.props.blogComment.content}</small>
+          <CommentItem>
+            <span className="pull-left">
+              <CircleImage src="http://lorempixel.com/40/40" />
+            </span>
+            <div>
+            { (this.props.loggedInUser && this.props.loggedInUser.uid === this.props.blogComment.user.uid) ? actionsContent : '' }
+              
+              <strong>{this.props.blogComment.user.displayName}</strong>
+              <small>  on {new Date(this.props.blogComment.date).toString()} </small>
+              <br />
+              
+              <small className="text-muted">{this.props.blogComment.content}</small>
+            </div>
+          </CommentItem>
           </div>
-        </CommentItem>
-        </div>
-      </CommentList>
-    );
+        </CommentList>
+      );
+    }
+    else {
+      return(
+        <CommentList>
+          <div>
+          <CommentItem>
+            <span className="pull-left">
+              <CircleImage src="http://lorempixel.com/40/40" />
+            </span>
+            <div>
+            { (this.props.loggedInUser && this.props.loggedInUser.uid === this.props.blogComment.user.uid) ? editCancelContent : '' }
+              
+              <strong>{this.props.blogComment.user.displayName}</strong>
+              <small>  on {new Date(this.props.blogComment.date).toString()} </small>
+              <br />
+              
+              <form onSubmit={this.onCommentEditSubmit}>
+                <input type="text" 
+                        className="form-control" 
+                        id="comment"
+                        name="comment"
+                        placeholder={this.props.blogComment.content} 
+                        value={this.state.updatedComment}
+                        onChange={this.handleCommentChange} />
+              </form>
+            </div>
+          </CommentItem>
+          </div>
+        </CommentList>
+      );
+    }
+
+    
+    
   }
 }

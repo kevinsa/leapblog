@@ -4,7 +4,7 @@ import { BlogPostDetail } from '../../components/BlogPostDetail';
 import { BlogPostCommentItem } from '../../components/BlogPostCommentItem';
 import { BlogPostCommentForm } from '../../components/BlogPostCommentForm';
 const { getBlogPostById } = require('../../api/BlogPost');
-const { getBlogComments, deleteBlogComment, createBlogComment } = require('../../api/BlogComment');
+const { getBlogComments, deleteBlogComment, createBlogComment, updateBlogComment } = require('../../api/BlogComment');
 
 const LoadingDiv = styled.div`
   text-align: center;
@@ -21,6 +21,7 @@ export class BlogPostPage extends React.Component {
 
     this.handleCommentAdd = this.handleCommentAdd.bind(this);
     this.handleCommentDelete = this.handleCommentDelete.bind(this);
+    this.handleCommentEdit = this.handleCommentEdit.bind(this);
   }
 
   componentDidMount() {
@@ -75,6 +76,26 @@ export class BlogPostPage extends React.Component {
       });
   }
 
+  handleCommentEdit(comment, updatedText) {
+    this.setState({ isLoading: true });
+
+    updateBlogComment(this.state.blogPost.key, comment.key, updatedText)
+      .then((res) => {
+        var commentState = this.state.blogComments;
+        commentState.forEach((c) => {
+          if(c.key === comment.key) {
+            c.content = updatedText;
+          }
+        });
+        this.setState({ blogComments: commentState, isLoading: false});
+      })
+      .catch((err) => {
+        this.setState({ isLoading: false });
+      })
+    console.dir(comment);
+    console.log(updatedText);
+  }
+
   render() {
     let loadingContent = <LoadingDiv><span><i className="fa fa-spinner fa-pulse fa-2x fa-fw"></i></span></LoadingDiv>
     
@@ -94,7 +115,7 @@ export class BlogPostPage extends React.Component {
 
             <div>
               {this.state.blogComments.map((comment) => {
-                return <BlogPostCommentItem blogComment={comment} deleteCommentCallback={this.handleCommentDelete} loggedInUser={this.props.loggedInUser}  />
+                return <BlogPostCommentItem blogComment={comment} editCommentCallback={this.handleCommentEdit} deleteCommentCallback={this.handleCommentDelete} loggedInUser={this.props.loggedInUser}  />
               })}
             </div>
             <div>

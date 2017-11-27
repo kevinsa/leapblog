@@ -20,6 +20,13 @@ const createBlogComment = (blogKey, commentText) => {
   );
 }
 
+const updateBlogComment = (blogKey, commentKey, commentText) => {
+  return axios.put(`${baseUrl}/api/blogposts/${blogKey}/comments/${commentKey}`,
+    { content: commentText },
+    _getAuthHeader()
+  );
+}
+
 const deleteBlogComment = (blogKey, commentKey) => {
   return axios.delete(`${baseUrl}/api/blogposts/${blogKey}/comments/${commentKey}`, _getAuthHeader() );
 }
@@ -27,5 +34,6 @@ const deleteBlogComment = (blogKey, commentKey) => {
 module.exports = {
   getBlogComments,
   createBlogComment,
+  updateBlogComment,
   deleteBlogComment
 }
