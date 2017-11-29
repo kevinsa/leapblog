@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 const { getBlogPostById } = require('../api/BlogPost');
 
-export class BlogForm extends React.Component {
+class BlogForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -118,6 +118,7 @@ export class BlogForm extends React.Component {
 
   render() {
     let loadingContent = <span><i className="fa fa-spinner fa-pulse fa-2x fa-fw"></i></span>;
+    let actionButtonText = (this.props.blogPostId) ? 'Edit Blog Post' : 'Add Blog Post';
 
     return(
       <form onSubmit={this.handleSubmit}>
@@ -141,7 +142,7 @@ export class BlogForm extends React.Component {
                  value={this.state.content}
                  onChange={this.handleContentChange} />
         </div>
-        <button disabled={!this.state.formValid} type="submit" className="btn btn-default">Add Blog Post</button>
+        <button disabled={!this.state.formValid} type="submit" className="btn btn-default">{actionButtonText}</button>
         
         { this.props.isSubmitting ? loadingContent : ''}
       </form>
@@ -155,3 +156,5 @@ BlogForm.propTypes = {
   blogSubmitCallback: PropTypes.func,
   isSubmitting: PropTypes.bool
 };
+
+export default BlogForm

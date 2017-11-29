@@ -1,8 +1,8 @@
 import React from "react";
 import styled from 'styled-components';
-import { BlogPostDetail } from '../../components/BlogPostDetail';
-import { BlogPostCommentItem } from '../../components/BlogPostCommentItem';
-import { BlogPostCommentForm } from '../../components/BlogPostCommentForm';
+import BlogPostDetail from '../../components/BlogPostDetail';
+import BlogPostCommentItem from '../../components/BlogPostCommentItem';
+import BlogPostCommentForm from '../../components/BlogPostCommentForm';
 import { base } from '../../config/Database';
 const { getBlogPostById } = require('../../api/BlogPost');
 const { deleteBlogComment, createBlogComment, updateBlogComment } = require('../../api/BlogComment');

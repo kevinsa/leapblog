@@ -12,7 +12,7 @@ const FormContainer = styled.div`
   border-width: 1px 0;
 `;
 
-export class BlogPostCommentForm extends React.Component {
+class BlogPostCommentForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -61,3 +61,5 @@ BlogPostCommentForm.propTypes = {
   addCommentCallback: PropTypes.func,
   loggedInUser: PropTypes.object
 };
+
+export default BlogPostCommentForm

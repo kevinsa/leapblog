@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { LoginForm } from '../../components/LoginForm';
+import LoginForm from '../../components/LoginForm';
 import Alert from '../../components/Alert';
 const { loginUser } = require('../../api/Auth');
 

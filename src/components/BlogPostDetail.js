@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import BlogPostItem from './BlogPostItem';
 
 
-export class BlogPostDetail extends React.Component {
+class BlogPostDetail extends React.Component {
   render() {
     return (
       <div>
@@ -17,3 +17,5 @@ BlogPostDetail.propTypes = {
   blogPost: PropTypes.object,
   loggedInUser: PropTypes.object
 };
+
+export default BlogPostDetail

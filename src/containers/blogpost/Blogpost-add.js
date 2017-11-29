@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
-import { BlogForm } from '../../components/BlogForm';
+import BlogForm from '../../components/BlogForm';
 import Alert from '../../components/Alert';
 const { createBlogPost } = require('../../api/BlogPost');
 

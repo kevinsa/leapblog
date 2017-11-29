@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export class RegisterForm extends React.Component {
+class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -136,3 +136,5 @@ RegisterForm.propTypes = {
   registrationCallback: PropTypes.func,
   isSubmitting: PropTypes.bool
 };
+
+export default RegisterForm

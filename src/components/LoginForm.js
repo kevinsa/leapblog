@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export class LoginForm extends React.Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -108,3 +108,5 @@ LoginForm.propTypes = {
   loginCallback: PropTypes.func,
   isSubmitting: PropTypes.bool
 };
+
+export default LoginForm

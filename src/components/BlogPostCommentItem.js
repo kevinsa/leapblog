@@ -35,7 +35,7 @@ const DeleteLink = styled.a`
   color: #a94442;
 `;
 
-export class BlogPostCommentItem extends React.Component {
+class BlogPostCommentItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -148,3 +148,5 @@ BlogPostCommentItem.propTypes = {
   editCommentCallback: PropTypes.func,
   loggedInUser: PropTypes.object
 };
+
+export default BlogPostCommentItem

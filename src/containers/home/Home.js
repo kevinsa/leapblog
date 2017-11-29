@@ -9,7 +9,7 @@ const ActionRow = () => {
       <div className="col-md-12">
         <span className="pull-right">
           <Link to={'/blogpost/add'}>
-            <button className="btn btn-sm btn-default"><i className="fa fa-plus" aria-hidden="true"></i>  Add Blog Post</button></Link>
+            <button className="btn btn-sm btn-success"><i className="fa fa-plus" aria-hidden="true"></i>  Add Blog Post</button></Link>
         </span>
       </div>
     </div>
