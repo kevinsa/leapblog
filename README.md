@@ -8,11 +8,11 @@ A simple blogging web application that allows users to read blog posts and their
 
 leap blog consists of a web client and a RESTful backend.  The web client is a SPA written in Javascript using the React framework.  The backend is written in Javascipt using the ExpressJS framework to host the RESTful end points running on NodeJS.  The application leverages Firebase for data persistence and real-time updates.
 
-###Hosting
+### Hosting
 
 leapblog is hosted on an AWS Lightsail VPS running an Ubuntu OS.  The web client static content is being served by Nginx.  Nginx is also acting as a reverse proxy that forwards requests to the RESTful API to ExpressJS.  ExpressJS is running on a NodeJS process which is being kept alive by pm2.
 
-###User Authentication
+### User Authentication
 The leapblog API is leveraging Firebase Auth for new user sign up and user authentication.  JWT tokens are being used by the API end points that require authenticated access.  JWT generation and validation is being performed by PassportJS middleware.  JWT tokens are expected to be present in the Authentication header with a value in the format of 'Bearer JWT'.
 
 ```sequence
@@ -23,12 +23,12 @@ API-->UI: HTTP OK - JWT token
 
 ```
 
-###Real-time Updates
+### Real-time Updates
 The comments on blog posts update in real-time as the data changes in the Firebase datastore.  The react component that renders the blog post detail view wires up a connection to Firebase that updates the comments state property as data changes in the datastore.
 
 ## Application Design Considerations
 
-###Overview
+### Overview
 leapblog was developed as two completely decoupled user interface and back end components.  
 
 ExpressJS is serving as a proxy and exposing a standard API for interacting with the application's datastore.  This has several benefits:
