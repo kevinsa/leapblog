@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { Link, HashRouter } from 'react-router-dom';
 
 export class TopNav extends React.Component {
@@ -20,16 +20,10 @@ export class TopNav extends React.Component {
           <HashRouter>
         <div className="container">
           <div className="navbar-header">
-            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
             <Link className="navbar-brand" to="/">leapblog</Link>
           </div>
           
-          <div id="navbar" className="collapse navbar-collapse">
+          <div id="navbar">
             <ul className="nav navbar-nav navbar-right">
               <li><a>Welcome, {this.props.loggedInUser.name}</a></li>
               <li><a onClick={this.handleLogout}>logout</a></li>
@@ -68,4 +62,9 @@ export class TopNav extends React.Component {
     }
   }
 }
+
+TopNav.propTypes = {
+  authenticatedStateCallback: PropTypes.func,
+  loggedInUser: PropTypes.object
+};
 

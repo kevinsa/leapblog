@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export class LoginForm extends React.Component {
   constructor(props) {
@@ -102,3 +103,8 @@ export class LoginForm extends React.Component {
     );
   }
 }
+
+LoginForm.propTypes = {
+  loginCallback: PropTypes.func,
+  isSubmitting: PropTypes.bool
+};

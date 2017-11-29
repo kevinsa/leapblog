@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export class RegisterForm extends React.Component {
   constructor(props) {
@@ -129,5 +130,9 @@ export class RegisterForm extends React.Component {
       </form>
     );
   }
+};
 
+RegisterForm.propTypes = {
+  registrationCallback: PropTypes.func,
+  isSubmitting: PropTypes.bool
 };

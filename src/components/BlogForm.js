@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 const { getBlogPostById } = require('../api/BlogPost');
 
 export class BlogForm extends React.Component {
@@ -146,5 +147,11 @@ export class BlogForm extends React.Component {
       </form>
     );
   }
-
 }
+
+BlogForm.propTypes = {
+  blogPostId: PropTypes.string,
+  blogEditCallback: PropTypes.func,
+  blogSubmitCallback: PropTypes.func,
+  isSubmitting: PropTypes.bool
+};

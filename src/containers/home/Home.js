@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import BlogPostList from '../../components/BlogPostList';
 
@@ -7,7 +8,8 @@ const ActionRow = () => {
     <div className="row">
       <div className="col-md-12">
         <span className="pull-right">
-          <Link to={'/blogpost/add'}>Add Blog Post</Link>
+          <Link to={'/blogpost/add'}>
+            <button className="btn btn-sm btn-default"><i className="fa fa-plus" aria-hidden="true"></i>  Add Blog Post</button></Link>
         </span>
       </div>
     </div>
@@ -29,3 +31,7 @@ export class HomePage extends React.Component {
     );
   }
 }
+
+HomePage.propTypes = {
+  loggedInUser: PropTypes.object
+};

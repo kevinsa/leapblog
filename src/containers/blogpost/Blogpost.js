@@ -5,7 +5,7 @@ import { BlogPostCommentItem } from '../../components/BlogPostCommentItem';
 import { BlogPostCommentForm } from '../../components/BlogPostCommentForm';
 import { base } from '../../config/Database';
 const { getBlogPostById } = require('../../api/BlogPost');
-const { getBlogComments, deleteBlogComment, createBlogComment, updateBlogComment } = require('../../api/BlogComment');
+const { deleteBlogComment, createBlogComment, updateBlogComment } = require('../../api/BlogComment');
 
 const LoadingDiv = styled.div`
   text-align: center;
@@ -30,10 +30,7 @@ export class BlogPostPage extends React.Component {
     base.bindToState(`comments/${this.props.match.params.id}`, {
       context: this,
       state: 'blogComments',
-      asArray: true,
-      then() {
-        console.log('something happened');
-      }
+      asArray: true
     });
 
     getBlogPostById(this.props.match.params.id)
@@ -110,7 +107,7 @@ export class BlogPostPage extends React.Component {
 
             <div>
               {this.state.blogComments.map((comment) => {
-                return <BlogPostCommentItem blogComment={comment} editCommentCallback={this.handleCommentEdit} deleteCommentCallback={this.handleCommentDelete} loggedInUser={this.props.loggedInUser}  />
+                return <BlogPostCommentItem key={comment.key} blogComment={comment} editCommentCallback={this.handleCommentEdit} deleteCommentCallback={this.handleCommentDelete} loggedInUser={this.props.loggedInUser}  />
               })}
             </div>
             <div>

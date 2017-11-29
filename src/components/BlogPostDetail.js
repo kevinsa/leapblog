@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import BlogPostItem from './BlogPostItem';
 
 
@@ -11,3 +12,8 @@ export class BlogPostDetail extends React.Component {
     );
   }
 }
+
+BlogPostDetail.propTypes = {
+  blogPost: PropTypes.object,
+  loggedInUser: PropTypes.object
+};

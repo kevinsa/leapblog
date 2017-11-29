@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import BlogPostItem from './BlogPostItem';
 import styled from 'styled-components';
 import Alert from './Alert';
@@ -70,9 +71,13 @@ export default class BlogPostList extends React.Component {
         { this.state.isLoading ? loadingContent : ''}
 
         {this.state.blogposts.map((post) => {
-          return <BlogPostItem blogPost={post} deleteCallback={this.handleDelete} loggedInUser={this.props.loggedInUser}  />
+          return <BlogPostItem key={post.key} blogPost={post} deleteCallback={this.handleDelete} loggedInUser={this.props.loggedInUser}  />
         })}
       </div>
     );
   }
 }
+
+BlogPostList.propTypes = {
+  loggedInUser: PropTypes.object
+};

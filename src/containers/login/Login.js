@@ -1,5 +1,6 @@
 import React from "react";
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { LoginForm } from '../../components/LoginForm';
 import Alert from '../../components/Alert';
 const { loginUser } = require('../../api/Auth');
@@ -52,4 +53,9 @@ class LoginPage extends React.Component {
   }
 }
 
+LoginPage.propTypes = {
+  authenticatedStateCallback: PropTypes.func
+};
+
 export default withRouter(LoginPage)
+

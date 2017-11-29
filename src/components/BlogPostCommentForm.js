@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const FormContainer = styled.div`
@@ -31,7 +32,6 @@ export class BlogPostCommentForm extends React.Component {
   }
 
   handleCommentChange(event) {
-    const name = event.target.name;
     const value = event.target.value
     this.setState( {comment: value });
   }
@@ -56,3 +56,8 @@ export class BlogPostCommentForm extends React.Component {
     }
   }
 }
+
+BlogPostCommentForm.propTypes = {
+  addCommentCallback: PropTypes.func,
+  loggedInUser: PropTypes.object
+};

@@ -90,5 +90,7 @@ export default class BlogPostItem extends React.Component {
 }
 
 BlogPostItem.propTypes = {
-  blogPost: PropTypes.object
+  blogPost: PropTypes.object,
+  deleteCallback: PropTypes.func,
+  loggedInUser: PropTypes.object
 };

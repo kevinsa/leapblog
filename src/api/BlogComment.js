@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { getAuthUser, getAuthHeader } = require('./Storage');
+const { getAuthHeader } = require('./Storage');
 const { getConfig } = require('../config/AppConfig');
 
 const _getAuthHeader = () => {

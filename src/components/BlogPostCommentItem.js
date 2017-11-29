@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const CommentList = styled.div`
@@ -21,10 +22,6 @@ const CircleImage = styled.img`
   width: 40px;
   height: 40px;
   margin-right: 10px;
-`;
-
-const DateSmall = styled.small`
-  margin-left: 10px;
 `;
 
 const ActionLink = styled.a`
@@ -67,7 +64,6 @@ export class BlogPostCommentItem extends React.Component {
   }
 
   handleCommentChange(event) {
-    const name = event.target.name;
     const value = event.target.value
     this.setState( {updatedComment: value });
   }
@@ -143,8 +139,12 @@ export class BlogPostCommentItem extends React.Component {
         </CommentList>
       );
     }
-
-    
-    
   }
 }
+
+BlogPostCommentItem.propTypes = {
+  blogComment: PropTypes.object,
+  deleteCommentCallback: PropTypes.func,
+  editCommentCallback: PropTypes.func,
+  loggedInUser: PropTypes.object
+};
