@@ -15,14 +15,6 @@ leapblog is hosted on an AWS Lightsail VPS running an Ubuntu OS.  The web client
 ### User Authentication
 The leapblog API is leveraging Firebase Auth for new user sign up and user authentication.  JWT tokens are being used by the API end points that require authenticated access.  JWT generation and validation is being performed by PassportJS middleware.  JWT tokens are expected to be present in the Authentication header with a value in the format of 'Bearer JWT'.
 
-```sequence
-UI->API: Hello Bob, how are you?
-API->Firebase: signInUser()
-Firebase-->API: Firebase User Object
-API-->UI: HTTP OK - JWT token
-
-```
-
 ### Real-time Updates
 The comments on blog posts update in real-time as the data changes in the Firebase datastore.  The react component that renders the blog post detail view wires up a connection to Firebase that updates the comments state property as data changes in the datastore.
 
