@@ -1,5 +1,8 @@
 import React from 'react';
+//import { render } from 'react-dom';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 import registerServiceWorker from './registerServiceWorker';
 
 import { HashRouter, Route, Switch } from 'react-router-dom';
@@ -90,5 +93,5 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('app'));
 registerServiceWorker();

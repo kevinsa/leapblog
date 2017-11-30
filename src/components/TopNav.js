@@ -26,7 +26,7 @@ export class TopNav extends React.Component {
           <div id="navbar">
             <ul className="nav navbar-nav navbar-right">
               <li><a>Welcome, {this.props.loggedInUser.name}</a></li>
-              <li><a onClick={this.handleLogout}>logout</a></li>
+              <li><a href="#" onClick={this.handleLogout}>logout</a></li>
             </ul>
           </div>
         </div>
