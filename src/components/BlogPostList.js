@@ -9,6 +9,10 @@ const CenteredDiv = styled.div`
   text-align: center;
 `;
 
+const PagerLink = styled.li`
+  cursor: pointer;
+`;
+
 export default class BlogPostList extends React.Component {
   constructor(props) {
     super(props);
@@ -18,10 +22,13 @@ export default class BlogPostList extends React.Component {
       isLoading: false,
       hasLoadingError: false,
       loadingErrorMsg: '',
+      currentPage: 1,
+      pageSize: 5
     };
 
     this.loadBlogPosts = this.loadBlogPosts.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   componentDidMount() {
@@ -59,22 +66,65 @@ export default class BlogPostList extends React.Component {
     });
   }
 
+  handlePageChange(event) {
+    this.setState({ currentPage: Number(event.target.id) });
+  }
+
   render() {
     let loadingContent = <CenteredDiv>
         <span><i className="fa fa-spinner fa-pulse fa-2x fa-fw"></i></span>
       </CenteredDiv>
 
-    return(
-      <div>
-        { this.state.hasLoadingError ? <Alert message={this.state.loadingErrorMsg} alertStyle={"alert alert-danger"}/> : ''}
+    if(this.state.isLoading) {
+      return loadingContent;
+    }
+    else {
+      const pageNumbers = [];
+      const { currentPage, pageSize } = this.state;
+      const lastBlogPost = currentPage * pageSize;
+      const firstBlogPost = lastBlogPost - pageSize;
 
-        { this.state.isLoading ? loadingContent : ''}
+      const viewablePosts = this.state.blogposts.slice(firstBlogPost, lastBlogPost);
+      for(let i = 1; i <= Math.ceil(this.state.blogposts.length / pageSize); i++){
+        pageNumbers.push(i);
+      }
 
-        {this.state.blogposts.map((post) => {
-          return <BlogPostItem key={post.key} blogPost={post} deleteCallback={this.handleDelete} loggedInUser={this.props.loggedInUser}  />
-        })}
-      </div>
-    );
+      const pageNumberLinks = pageNumbers.map((num) => {
+        return (
+          <PagerLink className={num === currentPage ? 'active' : ''} key={num}><a id={num} onClick={this.handlePageChange}>{num}</a></PagerLink>
+        )
+      })
+
+      const pager = <nav aria-label="Page navigation">
+          <ul className="pagination">
+            <PagerLink>
+              <a id="1" onClick={this.handlePageChange}>
+              &laquo;
+              </a>
+            </PagerLink>
+            {pageNumberLinks}
+            <PagerLink>
+              <a id={pageNumbers[pageNumbers.length -1]} onClick={this.handlePageChange}>
+              &raquo;
+              </a>
+            </PagerLink>
+          </ul>
+        </nav>
+
+      return(
+        <div>
+          { this.state.hasLoadingError ? <Alert message={this.state.loadingErrorMsg} alertStyle={"alert alert-danger"}/> : ''}
+  
+          {viewablePosts.map((post) => {
+            return <BlogPostItem key={post.key} blogPost={post} deleteCallback={this.handleDelete} loggedInUser={this.props.loggedInUser}  />
+          })}
+
+          <div className="pull-right">
+            { pageNumbers.length > 1 ? pager : '' }
+          </div>
+        </div>
+      );
+    }
   }
 }
 
