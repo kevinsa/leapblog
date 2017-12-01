@@ -93,7 +93,7 @@ export class BlogPostPage extends React.Component {
     else {
       return(
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           
             <div>
             <BlogPostDetail blogPost={this.state.blogPost} loggedInUser={this.props.loggedInUser}/>

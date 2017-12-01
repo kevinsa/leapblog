@@ -42,7 +42,7 @@ class LoginPage extends React.Component {
   render() {
     return(
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           { this.state.hasAuthErrors ? <Alert message={this.state.error} alertStyle={"alert alert-danger"}/> : ''}
           <LoginForm loginCallback={this.handleLogin} isSubmitting={this.state.isSubmitting}/>
         </div>

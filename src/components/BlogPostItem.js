@@ -3,14 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link, HashRouter } from 'react-router-dom';
 
-const BlogPostSection = styled.section`
-  background: #fff;
-  border-radius: 3px;
-  box-shadow: 0px 1px 1px #aaa;
-  padding: 3em;
-  margin: 2em auto;
-  font-family: "Droid Serif", sans-serif;
-`;
 
 const BlogPostHeader = styled.header`
   display: block;
@@ -60,26 +52,49 @@ class BlogPostItem extends React.Component {
     <DeleteActionLink onClick={this.deleteBlogPost}><i className="fa fa-trash" aria-hidden="true"></i> delete</DeleteActionLink>
    </BlogActions>
 
+    let contents = '';
+    if(this.props.mode === 'summary') {
+      contents = <div>
+                    { (this.props.loggedInUser && this.props.loggedInUser.uid === this.props.blogPost.user.uid) ? actionsContent : '' }
+                    <div className="post-preview">
+                      <Link to={`/blogpost/${this.props.blogPost.key}`}>
+                        <h2 className="post-title">
+                          {this.props.blogPost.title}
+                        </h2>
+                      </Link>
+                    
+                
+                      <p className="post-meta">
+                      Posted on {new Date(this.props.blogPost.date).toString()} | by {this.props.blogPost.user.displayName}
+                      </p>
+                    </div>
+                    <hr />
+                  </div>
+    }
+    else {
+      contents = <section>
+                    <BlogPostHeader>
+                      { (this.props.loggedInUser && this.props.loggedInUser.uid === this.props.blogPost.user.uid) ? actionsContent : '' }
+                  
+                      <BlogPostTitle>
+                        <Link to={`/blogpost/${this.props.blogPost.key}`}>{this.props.blogPost.title}</Link>
+                      </BlogPostTitle>
+                      <BlogPostMeta>
+                        Posted on {new Date(this.props.blogPost.date).toString()} | by {this.props.blogPost.user.displayName}
+                      </BlogPostMeta>
+                    </BlogPostHeader>
+                    <BlogPostSummary>
+                      <p>
+                        {this.props.blogPost.content}
+                      </p>
+                    </BlogPostSummary>
+                </section>
+    }
+
     return (
-      <HashRouter>
-      <BlogPostSection>
-        <BlogPostHeader>
-          { (this.props.loggedInUser && this.props.loggedInUser.uid === this.props.blogPost.user.uid) ? actionsContent : '' }
-       
-          <BlogPostTitle>
-            <Link to={`/blogpost/${this.props.blogPost.key}`}>{this.props.blogPost.title}</Link>
-          </BlogPostTitle>
-          <BlogPostMeta>
-            Posted on {new Date(this.props.blogPost.date).toString()} | by {this.props.blogPost.user.displayName}
-          </BlogPostMeta>
-        </BlogPostHeader>
-        <BlogPostSummary>
-          <p>
-            {this.props.blogPost.content}
-          </p>
-        </BlogPostSummary>
-      </BlogPostSection>
-      </HashRouter>
+        <HashRouter>
+          {contents}
+        </HashRouter>
     );
   }
 }

@@ -43,7 +43,7 @@ class RegisterPage extends React.Component {
     if(!this.state.isRegistered) {
       return(
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           { this.state.hasError ? <Alert message={this.state.error} alertStyle={"alert alert-danger"}/> : ''}
             <RegisterForm registrationCallback={this.handleRegister} isSubmitting={this.state.isSubmitting}/>
           </div>
@@ -53,7 +53,7 @@ class RegisterPage extends React.Component {
     else {
       return(
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div className="alert alert-success" role="alert">
               <i className="fa fa-check-circle" aria-hidden="true"></i>  
               <strong>  Success!</strong> Thanks for signing up, you can now proceed to <a onClick={this.redirectToLogin} className="alert-link">login</a>.
