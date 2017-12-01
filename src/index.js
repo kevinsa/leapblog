@@ -17,7 +17,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap-theme.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './index.css';
-import homebg from './home-bg.jpg';
+import homebg from './images/home-bg.jpg';
 
 var imageBg = {
   backgroundImage: `url(${homebg})`
