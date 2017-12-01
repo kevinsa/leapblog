@@ -89,7 +89,7 @@ class BlogPostList extends React.Component {
           { this.props.hasLoadingError ? <Alert message={this.props.loadingErrorMsg} alertStyle={"alert alert-danger"}/> : ''}
   
           {viewablePosts.map((post) => {
-            return <BlogPostItem key={post.key} blogPost={post} deleteCallback={this.handleDelete} loggedInUser={this.props.loggedInUser}  />
+            return <BlogPostItem key={post.key} blogPost={post} deleteCallback={this.handleDelete} loggedInUser={this.props.loggedInUser} mode={'summary'}  />
           })}
 
           <div className="pull-right">

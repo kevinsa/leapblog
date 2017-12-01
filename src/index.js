@@ -1,5 +1,4 @@
 import React from 'react';
-//import { render } from 'react-dom';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './store';
@@ -18,6 +17,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/css/bootstrap-theme.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './index.css';
+import homebg from './home-bg.jpg';
+
+var imageBg = {
+  backgroundImage: `url(${homebg})`
+}
 
 const { getAuthUser, setAuthUser, clearAuthUser } = require('./api/Storage');
 
@@ -72,6 +76,20 @@ class App extends React.Component {
       <div>
         <TopNav loggedInUser={this.state.authenticatedUser} authenticatedStateCallback={this.setLoggedOutState}/>
       
+        <header className="intro-header" style={imageBg}>
+          <div className="container">
+              <div className="row">
+                  <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                      <div className="site-heading">
+                          <h1>leapblog</h1>
+                          <hr className="small" />
+                          <span className="subheading">interesting content by interesting people</span>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </header>
+
         <div className="main-content">
           <div className="container">
             <HashRouter>
@@ -86,9 +104,28 @@ class App extends React.Component {
             </HashRouter>
           </div>
       </div>
-    </div>
 
-      
+      <hr />
+
+      <footer>
+        <div className="container">
+            <div className="row">
+                <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul className="list-inline text-center">
+                            <li>
+                                <a>
+                                    <span className="fa-stack fa-lg">
+                                        <i className="fa fa-circle fa-stack-2x"></i>
+                                        <i className="fa fa-bullhorn fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+      </footer>
+    </div>
     );
   }
 }
