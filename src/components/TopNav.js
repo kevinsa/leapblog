@@ -1,29 +1,65 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link, HashRouter } from 'react-router-dom';
 
 export class TopNav extends React.Component {
+
+  handleLogout = () => {
+    this.props.authenticatedStateCallback();
+  }
+
   render() {
-    return(
-      <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div className="container">
-        <div className="navbar-header">
-          <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span className="sr-only">Toggle navigation</span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-          </button>
-          <a className="navbar-brand" href="#">leapblog</a>
+    if(this.props.loggedInUser) {
+      return(
+        <nav className="navbar navbar-inverse navbar-fixed-top">
+          <HashRouter>
+        <div className="container">
+          <div className="navbar-header">
+            <Link className="navbar-brand" to="/">leapblog</Link>
+          </div>
+          
+          <div id="navbar">
+            <ul className="nav navbar-nav navbar-right">
+              <li><a>Welcome, {this.props.loggedInUser.name}</a></li>
+              <li><a href="#" onClick={this.handleLogout}>logout</a></li>
+            </ul>
+          </div>
         </div>
-        <div id="navbar" className="collapse navbar-collapse">
-          <ul className="nav navbar-nav">
-            <li className="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
+        </HashRouter>
+      </nav>
+      );
+    }
+    else {
+      return (
+        <nav className="navbar navbar-inverse navbar-fixed-top">
+          <HashRouter>
+        <div className="container">
+          <div className="navbar-header">
+            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+            </button>
+            <Link className="navbar-brand" to="/">leapblog</Link>
+          </div>
+          
+          <div id="navbar" className="collapse navbar-collapse">
+            <ul className="nav navbar-nav navbar-right">
+              <li><Link to="/login">login</Link></li>
+              <li><Link to="/register">sign up</Link></li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
-    );
+        </HashRouter>
+      </nav>
+      );
+    }
   }
 }
+
+TopNav.propTypes = {
+  authenticatedStateCallback: PropTypes.func,
+  loggedInUser: PropTypes.object
+};
 
