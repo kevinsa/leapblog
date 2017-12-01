@@ -48,14 +48,9 @@ const DeleteActionLink = styled.a`
   color: #a94442;
 `;
 
-export default class BlogPostItem extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.deleteBlogPost = this.deleteBlogPost.bind(this);
-  }
-
-  deleteBlogPost() {
+class BlogPostItem extends React.Component {
+  
+  deleteBlogPost = () => {
     this.props.deleteCallback(this.props.blogPost.key);
   }
 
@@ -94,3 +89,5 @@ BlogPostItem.propTypes = {
   deleteCallback: PropTypes.func,
   loggedInUser: PropTypes.object
 };
+
+export default BlogPostItem

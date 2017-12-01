@@ -16,36 +16,30 @@ class RegisterForm extends React.Component {
       passwordPristine: true,
       formValid: false
     }
-
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateField = this.validateField.bind(this);
   }
 
-  handleNameChange(event) {
+  handleNameChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({ name: value, namePristine: false},
       () => this.validateField(name, value) );
   }
 
-  handleEmailChange(event) {
+  handleEmailChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({ email: value, emailPrisitine: false},
       () => this.validateField(name, value) );
   }
 
-  handlePasswordChange(event) {
+  handlePasswordChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({ password: value, passwordPristine: false},
       () => this.validateField(name, value) );
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     this.props.registrationCallback({
       name: this.state.name,
       email: this.state.email,
@@ -54,7 +48,7 @@ class RegisterForm extends React.Component {
     event.preventDefault();
   }
 
-  validateField(name, value) {
+  validateField = (name, value) => {
     let emailValid = this.state.emailValid;
     let passwordValid = this.state.passwordValid;
     let nameValid = this.state.nameValid;
@@ -79,14 +73,14 @@ class RegisterForm extends React.Component {
     }, this.validateForm);
   }
 
-  errorClass(isValid, isPristine) {
-    return !isValid && !isPristine? 'has-error' : '';
-  }
-
-  validateForm() {
+  validateForm = () => {
     this.setState({
       formValid: this.state.emailValid && this.state.passwordValid && this.state.nameValid
     });
+  }
+
+  errorClass(isValid, isPristine) {
+    return !isValid && !isPristine? 'has-error' : '';
   }
 
   render() {

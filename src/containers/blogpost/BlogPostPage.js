@@ -20,10 +20,6 @@ export class BlogPostPage extends React.Component {
       liveComments: [],
       isLoading: false
     }
-    
-    this.handleCommentAdd = this.handleCommentAdd.bind(this);
-    this.handleCommentDelete = this.handleCommentDelete.bind(this);
-    this.handleCommentEdit = this.handleCommentEdit.bind(this);
   }
 
   componentDidMount() {
@@ -45,7 +41,7 @@ export class BlogPostPage extends React.Component {
       });
   }
 
-  handleCommentDelete(comment) {
+  handleCommentDelete = (comment) => {
     let key = comment.key;
 
     this.setState({ isLoading: true });
@@ -60,7 +56,7 @@ export class BlogPostPage extends React.Component {
       });
   }
 
-  handleCommentAdd(commentText) {
+  handleCommentAdd = (commentText) => {
     this.setState({ isLoading: true });
 
     createBlogComment(this.state.blogPost.key, commentText)
@@ -74,7 +70,7 @@ export class BlogPostPage extends React.Component {
       });
   }
 
-  handleCommentEdit(comment, updatedText) {
+  handleCommentEdit = (comment, updatedText) => {
     this.setState({ isLoading: true });
 
     updateBlogComment(this.state.blogPost.key, comment.key, updatedText)

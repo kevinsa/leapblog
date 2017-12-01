@@ -14,11 +14,9 @@ class LoginPage extends React.Component {
       error: '',
       isSubmitting: false
     }
-    
-    this.handleLogin = this.handleLogin.bind(this);
   }
 
-  handleLogin(loginData) {
+  handleLogin = (loginData) => {
     this.setState({ isSubmitting: true });
 
     loginUser(loginData)

@@ -13,21 +13,16 @@ class LoginForm extends React.Component {
       emailPrisitine: true,
       passwordPristine: true,
     }
-
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateField = this.validateField.bind(this);
   }
 
-  handleEmailChange(event) {
+  handleEmailChange = (event) => {
     const name = event.target.name;
     const value = event.target.value
     this.setState({ username: value, emailPrisitine: false},
       () => this.validateField(name, value) );
   }
 
-  handlePasswordChange(event) {
+  handlePasswordChange = (event) => {
     const name = event.target.name;
     const value = event.target.value
     this.setState( {password: value, passwordPristine: false },
@@ -35,7 +30,7 @@ class LoginForm extends React.Component {
   }
 
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     this.props.loginCallback({
       username: this.state.username,
       password: this.state.password
@@ -43,7 +38,7 @@ class LoginForm extends React.Component {
     event.preventDefault();
   }
 
-  validateField(name, value) {
+  validateField = (name, value) => {
     let emailValid = this.state.emailValid;
     let passwordValid = this.state.passwordValid;
 
@@ -63,7 +58,7 @@ class LoginForm extends React.Component {
     }, this.validateForm);
   }
 
-  validateForm() {
+  validateForm = () => {
     this.setState({formValid: this.state.emailValid && this.state.passwordValid});
   }
 

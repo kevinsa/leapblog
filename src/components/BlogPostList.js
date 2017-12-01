@@ -21,28 +21,24 @@ class BlogPostList extends React.Component {
     
     this.state = {
       currentPage: 1,
-      pageSize: 1,
+      pageSize: 5,
     };
-
-    this.loadBlogPosts = this.loadBlogPosts.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   componentDidMount() {
     this.loadBlogPosts();
   }
 
-  loadBlogPosts() {
+  loadBlogPosts = () => {
     this.props.loadBlogPostsAction();
   }
 
-  handleDelete(key) {
+  handleDelete = (key) => {
     this.props.deleteBlogPostAction(key);
     this.setState({ currentPage: 1 });
   }
 
-  handlePageChange(event) {
+  handlePageChange = (event) => {
     this.setState({ currentPage: Number(event.target.id) });
   }
 

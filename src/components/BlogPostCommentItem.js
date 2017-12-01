@@ -42,33 +42,27 @@ class BlogPostCommentItem extends React.Component {
       isEditing: false,
       updatedComment: ''
     }
-
-    this.deleteCommentItem = this.deleteCommentItem.bind(this);
-    this.editCommentItem = this.editCommentItem.bind(this);
-    this.onCancelEdit = this.onCancelEdit.bind(this);
-    this.onCommentEditSubmit = this.onCommentEditSubmit.bind(this)
-    this.handleCommentChange = this.handleCommentChange.bind(this);
   }
 
-  deleteCommentItem() {
+  deleteCommentItem = () => {
     console.log(this.props.blogComment);
     this.props.deleteCommentCallback(this.props.blogComment);
   }
 
-  editCommentItem(event) {
+  editCommentItem = (event) => {
     this.setState({ isEditing: true });
   }
 
-  onCancelEdit() {
+  onCancelEdit = () => {
     this.setState({ isEditing: false });
   }
 
-  handleCommentChange(event) {
+  handleCommentChange = (event) => {
     const value = event.target.value
     this.setState( {updatedComment: value });
   }
 
-  onCommentEditSubmit(event) {
+  onCommentEditSubmit = (event) => {
     event.preventDefault();
     if(this.state.updatedComment.length > 0) {
       this.props.editCommentCallback(this.props.blogComment, this.state.updatedComment);

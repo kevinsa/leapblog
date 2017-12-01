@@ -6,12 +6,12 @@ import store from './store';
 import registerServiceWorker from './registerServiceWorker';
 
 import { HashRouter, Route, Switch } from 'react-router-dom';
-import { HomePage } from './containers/home/Home';
-import LoginPage from './containers/login/Login';
-import RegisterPage from './containers/register/Register';
-import BlogPostAddPage from './containers/blogpost/Blogpost-add';
-import BlogPostEditPage from './containers/blogpost/Blogpost-edit';
-import { BlogPostPage } from './containers/blogpost/Blogpost';
+import { HomePage } from './containers/home/HomePage';
+import LoginPage from './containers/login/LoginPage';
+import RegisterPage from './containers/register/RegisterPage';
+import BlogPostAddPage from './containers/blogpost/BlogPostAddPage';
+import BlogPostEditPage from './containers/blogpost/BlogPostEditPage';
+import { BlogPostPage } from './containers/blogpost/BlogPostPage';
 import { TopNav } from './components/TopNav';
 
 import 'bootstrap/dist/css/bootstrap.min.css';

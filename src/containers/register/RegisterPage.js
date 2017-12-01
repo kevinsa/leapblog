@@ -13,15 +13,13 @@ class RegisterPage extends React.Component {
       error: '',
       isSubmitting: false
     }
-    this.handleRegister = this.handleRegister.bind(this);
-    this.redirectToLogin = this.redirectToLogin.bind(this);
   }
 
-  redirectToLogin() {
+  redirectToLogin = () => {
     this.props.history.push('/login');
   }
 
-  handleRegister(userInformation) {
+  handleRegister = (userInformation) => {
     this.setState({ isSubmitting: true });
 
     registerUser(userInformation)

@@ -18,12 +18,9 @@ class BlogPostCommentForm extends React.Component {
     this.state = {
       comment: '',
     }
-
-    this.onCommentSubmit = this.onCommentSubmit.bind(this);
-    this.handleCommentChange = this.handleCommentChange.bind(this);
   }
 
-  onCommentSubmit(event) {
+  onCommentSubmit = (event) => {
     event.preventDefault();
     if(this.state.comment.length > 0) {
       this.props.addCommentCallback(this.state.comment);
@@ -31,7 +28,7 @@ class BlogPostCommentForm extends React.Component {
     }
   }
 
-  handleCommentChange(event) {
+  handleCommentChange = (event) => {
     const value = event.target.value
     this.setState( {comment: value });
   }

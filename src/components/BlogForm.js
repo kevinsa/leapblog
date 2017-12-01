@@ -17,11 +17,6 @@ class BlogForm extends React.Component {
       isLoading: false,
       blogPost: {}
     }
-
-    this.handleTitleChange = this.handleTitleChange.bind(this);
-    this.handleContentChange = this.handleContentChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateField = this.validateField.bind(this);
   }
 
   setEditInitialState(response) {
@@ -53,21 +48,21 @@ class BlogForm extends React.Component {
       }
   }
 
-  handleTitleChange(event) {
+  handleTitleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value
     this.setState({ title: value, titlePrisitine: false},
       () => this.validateField(name, value) );
   }
 
-  handleContentChange(event) {
+  handleContentChange = (event) => {
     const name = event.target.name;
     const value = event.target.value
     this.setState( {content: value, contentPristine: false },
       () => this.validateField(name, value) );
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     if(this.props.blogPostId) {
@@ -88,7 +83,7 @@ class BlogForm extends React.Component {
     
   }
 
-  validateField(name, value) {
+  validateField = (name, value) => {
     let titleValid = this.state.titleValid;
     let contentValid = this.state.contentValid;
 

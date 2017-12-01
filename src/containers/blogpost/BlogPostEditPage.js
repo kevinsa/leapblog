@@ -2,52 +2,52 @@ import React from "react";
 import { withRouter } from 'react-router-dom';
 import BlogForm from '../../components/BlogForm';
 import Alert from '../../components/Alert';
-const { createBlogPost } = require('../../api/BlogPost');
+const { updateBlogPost } = require('../../api/BlogPost');
 
-class BlogPostAddPage extends React.Component {
+class BlogPostEditPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSubmitting: false,
+      isWorking: false,
       hasSubmitErrors: false,
       errorMessage: '',
     }
-    
-    this.handleBlogAdd = this.handleBlogAdd.bind(this);
   }
 
-  handleBlogAdd(blogData) {
-    this.setState({ isSubmitting: true });
+  handleBlogEdit = (blogData) => {
+    this.setState({ isWorking: true });
 
-    createBlogPost(blogData)
+    let blogPostId = this.props.match.params.id;
+    updateBlogPost(blogData, blogPostId)
       .then((res) => {
-        this.setState({ isSubmitting: false });
+        this.setState({ isWorking: false });
         this.props.history.push('/');
       })
       .catch((err) => {
-        this.setState({ isSubmitting: false });
+        this.setState({ isWorking: false });
 
         if(err.response) {
           const message = `${err.response.status} ${err.response.statusText}`;
-          this.setState({ hasAuthErrors: true, error: message });
+          this.setState({ hasSubmitErrors: true, errorMessage: message });
         }
         else {
           const message = err.message;
-          this.setState({ hasAuthErrors: true, error: message });
+          this.setState({ hasSubmitErrors: true, errorMessage: message });
         }
       });
   }
-
+  
   render() {
     return(
       <div className="row">
         <div className="col-md-12">
           { this.state.hasSubmitErrors ? <Alert message={this.state.errorMessage} alertStyle={"alert alert-danger"}/> : ''}
-          <BlogForm blogSubmitCallback={this.handleBlogAdd} isSubmitting={this.state.isSubmitting}/>
+          <BlogForm blogEditCallback={this.handleBlogEdit} isSubmitting={this.state.isWorking} blogPostId={this.props.match.params.id}/>
         </div>
       </div>
     );
   }
 }
 
-export default withRouter(BlogPostAddPage)
+export default withRouter(BlogPostEditPage)
+

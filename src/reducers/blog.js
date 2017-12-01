@@ -1,3 +1,12 @@
+import {
+  GET_BLOGPOSTS_PENDING,
+  GET_BLOGPOSTS_SUCCESS,
+  GET_BLOGPOSTS_ERROR,
+  DELETE_BLOGPOSTS_PENDING,
+  DELETE_BLOGPOSTS_SUCCESS,
+  DELETE_BLOGPOSTS_ERROR
+} from '../constants/blog';
+
 const initialState = {
   blogPosts: [],
   isLoading: false,
@@ -7,20 +16,20 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case 'REQUESTED_BLOGPOSTS':
+    case GET_BLOGPOSTS_PENDING:
       return{
         ...state,
         isLoading: true
       }
     
-    case 'LOADED_BLOGPOSTS':
+    case GET_BLOGPOSTS_SUCCESS:
       return{
         ...state,
         isLoading: false,
         blogPosts: action.payload
       }
 
-    case 'FAILED_BLOGPOSTS':
+    case GET_BLOGPOSTS_ERROR:
       return {
         ...state,
         isLoading: false,
@@ -28,13 +37,13 @@ export default (state = initialState, action) => {
         loadingErrorMsg: action.payload
       }
 
-    case 'REQUESTED_BLOGPOSTS_DELETE':
+    case DELETE_BLOGPOSTS_PENDING:
       return{
         ...state,
         isLoading: true
       }
 
-    case 'DELETED_BLOGPOSTS':
+    case DELETE_BLOGPOSTS_SUCCESS:
       let posts = state.blogPosts.filter((post) => {
         return post.key !== action.payload
       });
@@ -44,7 +53,7 @@ export default (state = initialState, action) => {
         blogPosts: posts
       }
 
-    case 'FAILED_BLOGPOSTS_DELETE':
+    case DELETE_BLOGPOSTS_ERROR:
       return {
         ...state,
         isLoading: false,

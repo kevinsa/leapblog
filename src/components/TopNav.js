@@ -3,13 +3,8 @@ import PropTypes from 'prop-types';
 import { Link, HashRouter } from 'react-router-dom';
 
 export class TopNav extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.handleLogout = this.handleLogout.bind(this);
-  }
-
-  handleLogout() {
+  handleLogout = () => {
     this.props.authenticatedStateCallback();
   }
 
